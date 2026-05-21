@@ -97,52 +97,10 @@
         }
 
         /* ==========================================================================
-           导航栏
-           ========================================================================== */
-        .top-nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 100;
-            background: rgba(2, 6, 23, 0.85);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border-color);
-            padding: 12px 0;
-            transition: var(--transition);
-        }
-        .top-nav .container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .nav-logo {
-            font-size: 18px;
-            font-weight: 900;
-            letter-spacing: 2px;
-            color: var(--text-main);
-            text-decoration: none;
-        }
-        .nav-links {
-            display: flex;
-            gap: 28px;
-            list-style: none;
-        }
-        .nav-links a {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 500;
-            transition: color var(--transition);
-            letter-spacing: 0.5px;
-        }
-        .nav-links a:hover { color: var(--brand-primary); }
-
-        /* ==========================================================================
            第一模块：黄金 10 秒区 (The Hook)
            ========================================================================== */
         .hero-section {
-            padding: 140px 0 80px 0;
+            padding: 80px 0 80px 0;
             border-bottom: 1px solid var(--border-color);
         }
 
@@ -542,19 +500,6 @@
     <div class="bg-glow"></div>
     <div class="bg-glow-2"></div>
 
-    <!-- 顶部导航 -->
-    <nav class="top-nav">
-        <div class="container">
-            <a href="#" class="nav-logo">GAO SI</a>
-            <ul class="nav-links">
-                <li><a href="#hero">首页</a></li>
-                <li><a href="#battles">核心战役</a></li>
-                <li><a href="#foundation">职业履历</a></li>
-                <li><a href="mailto:gaosihaha@126.com">联系我</a></li>
-            </ul>
-        </div>
-    </nav>
-
     <div class="container">
         <!-- ================= HERO SECTION ================= -->
         <section class="hero-section" id="hero">
@@ -712,23 +657,6 @@
 
         document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-        // 导航栏滚动高亮
-        const sections = document.querySelectorAll('section[id]');
-        const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
-        
-        window.addEventListener('scroll', () => {
-            let current = '';
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop - 100;
-                if (window.scrollY >= sectionTop) {
-                    current = section.getAttribute('id');
-                }
-            });
-            navLinks.forEach(link => {
-                link.style.color = link.getAttribute('href') === '#' + current ? 'var(--brand-primary)' : '';
-            });
-        });
-        
         // 平滑滚动
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
