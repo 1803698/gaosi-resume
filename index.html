@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="高斯 - 跨越周期的商业操盘手，19年跨领域实战派，擅长组织效能优化与商业战略转型">
+    <title>高斯 - 跨越周期的商业操盘手</title>
+    
+    <!-- 字体与图标 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        /* ==========================================================================
+           底层变量与基座 (Foundation)
+           ========================================================================== */
+        :root {
+            --bg-dark: #020617;
+            --bg-surface: #0f172a;
+            --bg-elevated: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --brand-primary: #0ea5e9;
+            --brand-success: #10b981;
+            --border-color: #334155;
+            
+            --font-sc: 'Noto Sans SC', sans-serif;
+            --font-en: 'Montserrat', sans-serif;
+            
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-sc);
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* 装饰性背景光晕 */
+        .bg-glow {
+            position: fixed;
+            top: -20vh;
+            left: -10vw;
+            width: 50vw;
+            height: 50vw;
+            background: radial-gradient(circle, rgba(14, 165, 233, 0.08) 0%, rgba(0,0,0,0) 70%);
+            border-radius: 50%;
+            z-index: -1;
+            pointer-events: none;
+            animation: glowDrift 20s ease-in-out infinite alternate;
+        }
+        
+        .bg-glow-2 {
+            position: fixed;
+            bottom: -30vh;
+            right: -10vw;
+            width: 40vw;
+            height: 40vw;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.06) 0%, rgba(0,0,0,0) 70%);
+            border-radius: 50%;
+            z-index: -1;
+            pointer-events: none;
+            animation: glowDrift 25s ease-in-out infinite alternate-reverse;
+        }
+        
+        @keyframes glowDrift {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(5vw, 5vh); }
+        }
+
+        /* 滚动动画 */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ==========================================================================
+           导航栏
+           ========================================================================== */
+        .top-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: rgba(2, 6, 23, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 12px 0;
+            transition: var(--transition);
+        }
+        .top-nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .nav-logo {
+            font-size: 18px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            color: var(--text-main);
+            text-decoration: none;
+        }
+        .nav-links {
+            display: flex;
+            gap: 28px;
+            list-style: none;
+        }
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color var(--transition);
+            letter-spacing: 0.5px;
+        }
+        .nav-links a:hover { color: var(--brand-primary); }
+
+        /* ==========================================================================
+           第一模块：黄金 10 秒区 (The Hook)
+           ========================================================================== */
+        .hero-section {
+            padding: 140px 0 80px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .hero-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 40px;
+        }
+
+        .name-block h1 {
+            font-size: 64px;
+            font-weight: 900;
+            letter-spacing: 4px;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #f8fafc, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .name-block p {
+            font-size: 24px;
+            color: var(--brand-primary);
+            font-weight: 500;
+            letter-spacing: 2px;
+        }
+
+        .contact-block {
+            text-align: right;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+        .contact-block a {
+            color: var(--text-main);
+            text-decoration: none;
+            display: block;
+            margin-top: 6px;
+            transition: color var(--transition);
+            font-size: 14px;
+        }
+        .contact-block a:hover { color: var(--brand-primary); }
+        .contact-block i { margin-right: 6px; }
+
+        .tags-wrapper {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+
+        .tag {
+            background: rgba(14, 165, 233, 0.1);
+            color: var(--brand-primary);
+            border: 1px solid rgba(14, 165, 233, 0.3);
+            padding: 10px 24px;
+            border-radius: 50px;
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            transition: all var(--transition);
+        }
+        .tag:hover {
+            background: rgba(14, 165, 233, 0.2);
+            border-color: var(--brand-primary);
+            transform: translateY(-2px);
+        }
+
+        .executive-summary {
+            font-size: 19px;
+            color: var(--text-muted);
+            border-left: 4px solid var(--brand-primary);
+            padding-left: 24px;
+            margin-bottom: 60px;
+            max-width: 800px;
+            line-height: 1.9;
+        }
+        .executive-summary strong { color: var(--text-main); }
+
+        /* 数据证明区 */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .stat-card {
+            background-color: var(--bg-surface);
+            padding: 30px 24px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--brand-primary), var(--brand-success));
+            opacity: 0;
+            transition: opacity var(--transition);
+        }
+        .stat-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--brand-primary);
+            box-shadow: 0 20px 40px rgba(14, 165, 233, 0.1);
+        }
+        .stat-card:hover::before { opacity: 1; }
+
+        .stat-card .num {
+            font-family: var(--font-en);
+            font-size: 52px;
+            font-weight: 900;
+            color: var(--brand-success);
+            line-height: 1;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: baseline;
+        }
+        .stat-card .num .unit {
+            font-size: 22px;
+            margin-left: 4px;
+            font-weight: 700;
+        }
+        .stat-card .num .prefix {
+            font-size: 36px;
+            margin-right: 2px;
+        }
+
+        .stat-card h3 {
+            font-size: 16px;
+            color: var(--text-main);
+            margin-bottom: 8px;
+        }
+
+        .stat-card p {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* ==========================================================================
+           第二模块：核心战役 (The Proof - STAR Method)
+           ========================================================================== */
+        .section-title {
+            font-size: 30px;
+            font-weight: 900;
+            margin: 80px 0 40px 0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .section-title::before {
+            content: '';
+            display: block;
+            width: 8px;
+            height: 32px;
+            background: linear-gradient(180deg, var(--brand-primary), var(--brand-success));
+            border-radius: 4px;
+            flex-shrink: 0;
+        }
+
+        .battle-card {
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 50px;
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+            transition: border-color var(--transition), box-shadow var(--transition);
+        }
+        .battle-card:hover {
+            border-color: rgba(14, 165, 233, 0.3);
+            box-shadow: 0 0 60px rgba(14, 165, 233, 0.05);
+        }
+        .battle-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at 20% 0%, rgba(14, 165, 233, 0.03) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .battle-header { margin-bottom: 40px; }
+        .battle-header h3 {
+            font-size: 26px;
+            color: var(--text-main);
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+        .battle-header .company {
+            font-size: 15px;
+            color: var(--brand-primary);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .star-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 40px;
+        }
+
+        .star-left .block { margin-bottom: 30px; }
+        .star-left .block-title {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-muted);
+            padding: 5px 14px;
+            border-radius: var(--radius-sm);
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            letter-spacing: 0.5px;
+        }
+        .star-left p {
+            color: var(--text-muted);
+            font-size: 15px;
+            line-height: 1.8;
+        }
+
+        .star-right {
+            background-color: var(--bg-elevated);
+            padding: 32px;
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(16, 185, 129, 0.15);
+        }
+        .star-right .block-title {
+            color: var(--brand-success);
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .result-list { list-style: none; }
+        .result-list li {
+            position: relative;
+            padding-left: 28px;
+            margin-bottom: 16px;
+            font-size: 17px;
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+        .result-list li::before {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            color: var(--brand-success);
+            position: absolute;
+            left: 0;
+            top: 3px;
+            font-size: 13px;
+        }
+        .highlight-data {
+            color: var(--brand-success);
+            font-family: var(--font-en);
+            font-weight: 900;
+            font-size: 20px;
+            margin: 0 3px;
+        }
+
+        /* ==========================================================================
+           第三模块：外企底盘 (The Foundation)
+           ========================================================================== */
+        .foundation-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-bottom: 80px;
+        }
+
+        .foundation-card {
+            background-color: var(--bg-surface);
+            padding: 40px 30px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            text-align: center;
+            transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
+        }
+        .foundation-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(14, 165, 233, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .foundation-card .icon {
+            font-size: 38px;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            transition: color var(--transition);
+        }
+        .foundation-card:hover .icon { color: var(--brand-primary); }
+
+        .foundation-card h3 {
+            font-size: 20px;
+            color: var(--text-main);
+            margin-bottom: 5px;
+        }
+        .foundation-card h4 {
+            font-size: 14px;
+            color: var(--brand-primary);
+            margin-bottom: 18px;
+            font-weight: 500;
+        }
+        .foundation-card p {
+            font-size: 14px;
+            color: var(--text-muted);
+            text-align: left;
+            line-height: 1.7;
+        }
+
+        /* ==========================================================================
+           Footer
+           ========================================================================== */
+        .site-footer {
+            border-top: 1px solid var(--border-color);
+            padding: 40px 0;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+        .site-footer a {
+            color: var(--brand-primary);
+            text-decoration: none;
+        }
+
+        /* ==========================================================================
+           响应式适配 (Responsive)
+           ========================================================================== */
+        @media (max-width: 1024px) {
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .foundation-grid { grid-template-columns: 1fr 1fr; }
+        }
+        
+        @media (max-width: 768px) {
+            .hero-header { 
+                flex-direction: column; 
+                align-items: flex-start; 
+                gap: 24px; 
+            }
+            .name-block h1 { font-size: 42px; }
+            .name-block p { font-size: 18px; }
+            .contact-block { text-align: left; }
+            .stats-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+            .stat-card { padding: 20px 16px; }
+            .stat-card .num { font-size: 38px; }
+            .star-grid { grid-template-columns: 1fr; }
+            .battle-card { padding: 30px 20px; }
+            .foundation-grid { grid-template-columns: 1fr; }
+            .section-title { font-size: 24px; }
+            .nav-links { gap: 16px; }
+            .nav-links a { font-size: 13px; }
+            .executive-summary { font-size: 16px; }
+        }
+        
+        @media (max-width: 480px) {
+            .stats-grid { grid-template-columns: 1fr; }
+            .name-block h1 { font-size: 32px; letter-spacing: 2px; }
+            .tags-wrapper { gap: 10px; }
+            .tag { font-size: 13px; padding: 8px 16px; }
+            .hero-section { padding: 120px 0 50px 0; }
+        }
+        
+        /* 打印样式 */
+        @media print {
+            body { background: white; color: #1a1a1a; }
+            .top-nav, .bg-glow, .bg-glow-2 { display: none; }
+            .hero-section, .battle-card, .foundation-card { 
+                background: white !important; 
+                border-color: #e5e7eb !important; 
+                box-shadow: none !important;
+            }
+            .name-block h1 {
+                background: none !important;
+                -webkit-text-fill-color: #1a1a1a !important;
+                color: #1a1a1a !important;
+            }
+            .stat-card { background: #f9fafb !important; }
+            .star-right { background: #f0fdf4 !important; border-color: #bbf7d0 !important; }
+            .site-footer { border-color: #e5e7eb; }
+        }
+    </style>
+</head>
+<body>
+    <!-- 背景光晕 -->
+    <div class="bg-glow"></div>
+    <div class="bg-glow-2"></div>
+
+    <!-- 顶部导航 -->
+    <nav class="top-nav">
+        <div class="container">
+            <a href="#" class="nav-logo">GAO SI</a>
+            <ul class="nav-links">
+                <li><a href="#hero">首页</a></li>
+                <li><a href="#battles">核心战役</a></li>
+                <li><a href="#foundation">职业履历</a></li>
+                <li><a href="mailto:gaosihaha@126.com">联系我</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- ================= HERO SECTION ================= -->
+        <section class="hero-section" id="hero">
+            <div class="hero-header">
+                <div class="name-block">
+                    <h1>高 斯</h1>
+                    <p>连续创业合伙人 / 资深业务操盘手</p>
+                </div>
+                <div class="contact-block">
+                    <div><i class="fa-solid fa-medal"></i> 成都市新经济百强人才 / 金熊猫B类人才</div>
+                    <a href="tel:18628051369"><i class="fa-solid fa-phone"></i> 186 2805 1369</a>
+                    <a href="mailto:gaosihaha@126.com"><i class="fa-solid fa-envelope"></i> gaosihaha@126.com</a>
+                </div>
+            </div>
+
+            <div class="tags-wrapper">
+                <div class="tag"><i class="fa-solid fa-crosshairs"></i> 跨越周期的商业操盘手</div>
+                <div class="tag"><i class="fa-solid fa-scalpel"></i> 组织效能的"外科医生"</div>
+                <div class="tag"><i class="fa-solid fa-feather-pointed"></i> "重转轻"战略推手</div>
+            </div>
+
+            <p class="executive-summary">
+                19 年跨领域实战派。从 3M、神州数码的外企大厂体系，到优客逸家（B轮至C+轮）10年核心合伙人。<strong>不仅经历过业务的狂飙突进，更主导过企业在生死低谷期的硬核转型。</strong>擅长在复杂环境里找杠杆，用数据驱动决策，让组织变轻、变快、变赚钱。
+            </p>
+
+            <div class="stats-grid">
+                <div class="stat-card fade-in">
+                    <div class="num"><span class="prefix">约</span>10<span class="unit">万间</span></div>
+                    <h3>房源规模盘</h3>
+                    <p>主导业务从0到1，6年拓展4城，实现区域公司连续3年净利为正。</p>
+                </div>
+                <div class="stat-card fade-in">
+                    <div class="num">+20<span class="unit">%</span></div>
+                    <h3>逆势利润率</h3>
+                    <p>疫情极寒期推行组织改革，裁减冗余，利润率反而大幅增长。</p>
+                </div>
+                <div class="stat-card fade-in">
+                    <div class="num">15<span class="unit">亿+</span></div>
+                    <h3>管理现金流</h3>
+                    <p>深度参与B轮至C+轮融资全周期，直面并对接40+顶级投资机构。</p>
+                </div>
+                <div class="stat-card fade-in">
+                    <div class="num"><span class="prefix">≈</span>5<span class="unit">%</span></div>
+                    <h3>极致中后台成本</h3>
+                    <p>落地阿米巴合伙人制，释放70%管理资源，创行业管控效能极值。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= BATTLES SECTION (STAR METHOD) ================= -->
+        <section id="battles">
+            <h2 class="section-title fade-in">核心战役实录</h2>
+
+            <!-- 战役 1 -->
+            <div class="battle-card fade-in">
+                <div class="battle-header">
+                    <div class="company">优客逸家核心合伙人期</div>
+                    <h3>战役一：极限抗压与组织变阵，实现降本增效</h3>
+                </div>
+                <div class="star-grid">
+                    <div class="star-left">
+                        <div class="block">
+                            <span class="block-title"><i class="fa-solid fa-bolt"></i> 面临困境 (Situation)</span>
+                            <p>疫情冲击叠加长租公寓行业剧烈调整，重资产模式资金链承压，企业面临生死存亡，急需迅速止血并恢复造血能力。</p>
+                        </div>
+                        <div class="block">
+                            <span class="block-title"><i class="fa-solid fa-chess-knight"></i> 破局动作 (Action)</span>
+                            <p>大刀阔斧重构组织形态。设计并强力落地"泛阿米巴合伙人制"，将组织极度扁平化，彻底打破原有的冗余大中台结构，将经营权与责任下放至听得见炮火的一线。</p>
+                        </div>
+                    </div>
+                    <div class="star-right">
+                        <div class="block-title"><i class="fa-solid fa-chart-line"></i> 量化战果 (Result)</div>
+                        <ul class="result-list">
+                            <li>全盘存量业务仅保留 <span class="highlight-data">10</span> 名核心合伙人支撑。</li>
+                            <li>团队总规模由 <span class="highlight-data">1030</span> 人硬核精简至 <span class="highlight-data">380</span> 人。</li>
+                            <li>成功释放 <span class="highlight-data">70%</span> 的管理资源反哺新业务探索。</li>
+                            <li>在极限降本下，业务未崩盘，利润率反而逆势提升 <span class="highlight-data">20%</span>。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 战役 2 -->
+            <div class="battle-card fade-in">
+                <div class="battle-header">
+                    <div class="company">优客逸家战略转型期</div>
+                    <h3>战役二：绝境破局，寻找轻资产"第二曲线"</h3>
+                </div>
+                <div class="star-grid">
+                    <div class="star-left">
+                        <div class="block">
+                            <span class="block-title"><i class="fa-solid fa-bolt"></i> 面临困境 (Situation)</span>
+                            <p>资本寒冬下，传统的重资产"包租婆"模式遭遇规模化天花板与现金流死结，公司亟需开辟不依赖重资金的第二增长曲线。</p>
+                        </div>
+                        <div class="block">
+                            <span class="block-title"><i class="fa-solid fa-chess-knight"></i> 破局动作 (Action)</span>
+                            <p>主导战略"由重转轻"，集中资源孵化"智慧社区运营"项目。代表公司与成都高投、城投等国资平台深度结盟并成立合资公司，对外输出公司积累 10 年的标准化运营系统与数字化能力。</p>
+                        </div>
+                    </div>
+                    <div class="star-right">
+                        <div class="block-title"><i class="fa-solid fa-chart-line"></i> 量化战果 (Result)</div>
+                        <ul class="result-list">
+                            <li>成功打透轻资产服务网络，完成 <span class="highlight-data">3000+</span> 个物业小区线上合作。</li>
+                            <li>新业务模型覆盖成都市超 <span class="highlight-data">400万</span> 居民人口。</li>
+                            <li>跑通政企合作（To G/To B）新路径，推动公司从"重资产房东"向"轻资产解决方案提供商"实现关键性战略进化。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= FOUNDATION SECTION ================= -->
+        <section id="foundation">
+            <h2 class="section-title fade-in">外企基石与 B2B 攻坚能力</h2>
+            <div class="foundation-grid">
+                <div class="foundation-card fade-in">
+                    <div class="icon"><i class="fa-solid fa-pen-nib"></i></div>
+                    <h3>派克笔 (Parker)</h3>
+                    <h4>B2B大区 GM (西区7省)</h4>
+                    <p>从零搭建广域销售与经销商网络。深耕金融、政企大客户，独立斩获 2 个百万级单体大单，证明了在传统行业的破冰与大客户直销能力。</p>
+                </div>
+                <div class="foundation-card fade-in">
+                    <div class="icon"><i class="fa-solid fa-flask"></i></div>
+                    <h3>3M 中国</h3>
+                    <h4>高级销售经理</h4>
+                    <p>攻克西南空白市场，搭建 B2B+B2C 双通路。独立操盘华西医院、建行等超大型项目从线索发掘、招投标到回款的全流程生命周期管理。</p>
+                </div>
+                <div class="foundation-card fade-in">
+                    <div class="icon"><i class="fa-solid fa-server"></i></div>
+                    <h3>神州数码 (Digital China)</h3>
+                    <h4>区域经理</h4>
+                    <p>专注安防产线，操盘年度千万级销售任务。拿下 300万+ 级大型标杆项目 10 余个，积累了硬核的 IT/系统集成项目风控与运作底子。</p>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <p>© 2026 高斯 · 跨越周期的商业操盘手 · <a href="mailto:gaosihaha@126.com">gaosihaha@126.com</a></p>
+        </div>
+    </footer>
+
+    <!-- 滚动动画脚本 -->
+    <script>
+        // 滚动渐入动画
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // 导航栏滚动高亮
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+        
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                if (window.scrollY >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+            navLinks.forEach(link => {
+                link.style.color = link.getAttribute('href') === '#' + current ? 'var(--brand-primary)' : '';
+            });
+        });
+        
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
